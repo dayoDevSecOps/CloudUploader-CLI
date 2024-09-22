@@ -102,12 +102,13 @@ STORAGE_KEY=$(az storage account keys list --resource-group $RgName --account-na
 
 function FileUploader()
 {
+    foundFile=$(find "$(dirname "$fileName")" -name "$(basename "$fileName")" 2>/dev/null)
     az storage blob upload \
             --account-name $StgAcct \
             --account-key $STORAGE_KEY \
             --container-name $Container \
             --name $(basename "$fileName") \
-            --file $fileName
+            --file $foundFile
 }
 
 FileUploader
